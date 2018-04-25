@@ -1,0 +1,68 @@
+#!/bin/bash
+# name: rainbow
+# description:print random colors
+# The MIT License (MIT)
+# Author: Alex Baranowski
+
+my_sleep_time="0.0003"
+my_infinitely=false
+my_count=1
+
+trap finish INT
+finish(){
+    # Reset terminal colors.
+    echo -e "\e[0m"
+    exit 0
+}
+
+print_color(){
+    echo -en "\e[48;5;${1}m \e[0m" && sleep $2
+}
+
+print_once(){
+    lines=$(tput lines)
+    columns=$(tput cols)
+    to_print=$((lines*columns))
+    for i in $(seq 1 $to_print); do
+        print_color $((RANDOM % 256)) $my_sleep_time
+    done
+}
+print_help(){
+    echo "Usage: $(basename "$0") [-i|--infinitely ] [-c|--count (default: 1)] [-s|--sleep sleep_time (default 0.0003)]"
+
+    exit 1
+}
+
+while [[ $# -gt 0 ]]
+do
+    key="$1"
+    case $key in
+        -i|--infinitely)
+            my_infinitely=true
+            shift
+            ;;
+        -h|--help)
+            print_help
+            ;;
+        -c|--count)
+            my_count=$2
+            shift
+            shift
+            ;;
+        -s|--sleep)
+            my_sleep_time=$2
+            shift
+            shift
+            ;;
+        *)    # unknown option
+            echo "$key arg cannot be parsed use -h/--help"
+            exit 1
+            ;;
+    esac
+done
+
+while [ "$my_count" -gt 0 ] || $my_infinitely ;
+do
+    print_once
+    my_count=$((my_count-1))
+done
