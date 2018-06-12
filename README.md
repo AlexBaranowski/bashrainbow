@@ -1,5 +1,5 @@
 # bashrainbow
-Print random colors on your terminal
+Prints random colors on your terminal
 
 ## Installation
 ```bash
