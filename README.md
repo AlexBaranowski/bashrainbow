@@ -4,7 +4,7 @@ Prints random colors on your terminal
 ## Installation
 ```bash
 curl https://raw.githubusercontent.com/AlexBaranowski/bashrainbow/master/rainbow | sudo tee /usr/bin/rainbow
-chmod 755 /usr/bin/rainbow
+sudo chmod 755 /usr/bin/rainbow
 ```
 ## Usage
 ```bash
